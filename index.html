@@ -823,12 +823,17 @@ footer {
     <div class="form-panel" id="formPanel">
       <div class="form-eyebrow">Acesso imediato</div>
       <div class="form-title">Receba o guia<br>no seu WhatsApp</div>
-      <div class="form-desc">Preencha 3 campos. Acesso imediato ao PDF + análise gratuita do seu caso.</div>
+      <div class="form-desc">Preencha 4 campos. Acesso imediato ao PDF + análise gratuita do seu caso.</div>
 
       <form id="leadForm">
         <div class="form-row">
           <label for="nome">Nome completo</label>
           <input type="text" id="nome" name="Nome" required placeholder="Como prefere ser chamado">
+        </div>
+
+        <div class="form-row">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="Email" required placeholder="seu@email.com">
         </div>
 
         <div class="form-row">
@@ -1010,6 +1015,7 @@ form.addEventListener('submit', async (e) => {
   const formData = new FormData(form);
   const data = {
     Nome: formData.get('Nome'),
+    Email: formData.get('Email'),
     WhatsApp: formData.get('WhatsApp'),
     Patrimonio: formData.get('Patrimônio'),
     Origem: 'Landing Ebook Isentos IR',
