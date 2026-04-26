@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Leonardo Augusto · Planejamento Patrimonial</title>
+<meta name="description" content="Descubra quando você poderá parar de trabalhar. Simulação gratuita de independência financeira para médicos, advogados e profissionais liberais." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy: #0A1628;
+  --navy-deep: #060F1C;
+  --navy-mid: #132742;
+  --navy-soft: #1E3555;
+  --gold: #C9A961;
+  --gold-soft: #D4B978;
+  --gold-muted: #8F7943;
+  --cream: #F4F1EA;
+  --cream-warm: #EDE7D8;
+  --ink: #0A1628;
+  --muted: #5C6B82;
+  --line: rgba(201, 169, 97, 0.2);
+  --line-dark: rgba(201, 169, 97, 0.35);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Grain overlay - luxury texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+/* ========== NAV ========== */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 22px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  background: rgba(10, 22, 40, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(201, 169, 97, 0.1);
+  transition: padding 0.3s ease;
+}
+
+.monogram {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--cream);
+  letter-spacing: 0.5px;
+  font-variation-settings: 'opsz' 144;
+}
+
+.monogram span {
+  color: var(--gold);
+}
+
+.nav-handle {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cream);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.8;
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+
+.nav-handle:hover { opacity: 1; color: var(--gold); }
+
+/* ========== HERO ========== */
+.hero {
+  min-height: 100vh;
+  background: var(--navy);
+  color: var(--cream);
+  padding: 140px 40px 80px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse at top right, rgba(201, 169, 97, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom left, rgba(30, 53, 85, 0.6) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.3;
+}
+
+.hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.2s;
+}
+
+.hero-eyebrow::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+}
+
+h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: clamp(2.8rem, 5.5vw, 5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--cream);
+  font-variation-settings: 'opsz' 144;
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.4s;
+}
+
+h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(244, 241, 234, 0.75);
+  max-width: 540px;
+  margin-bottom: 44px;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.6s;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 36px;
+  background: var(--gold);
+  color: var(--navy-deep);
+  text-decoration: none;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.8s;
+  border: 1px solid var(--gold);
+}
+
+.hero-cta:hover {
+  background: transparent;
+  color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(201, 169, 97, 0.15);
+}
+
+.hero-cta svg {
+  transition: transform 0.3s;
+}
+
+.hero-cta:hover svg {
+  transform: translateX(4px);
+}
+
+/* Hero right panel - visual */
+.hero-visual {
+  position: relative;
+  opacity: 0;
+  animation: fadeIn 1.2s ease forwards 0.6s;
+}
+
+.visual-card {
+  background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy-deep) 100%);
+  border: 1px solid var(--line-dark);
+  padding: 40px;
+  position: relative;
+  box-shadow:
+    0 40px 80px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(201, 169, 97, 0.08) inset;
+}
+
+.visual-card::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.visual-label {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.visual-big {
+  font-family: 'Fraunces', serif;
+  font-size: 3.2rem;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 8px;
+  font-variation-settings: 'opsz' 144;
+}
+
+.visual-small {
+  font-size: 13px;
+  color: rgba(244, 241, 234, 0.5);
+  margin-bottom: 32px;
+  letter-spacing: 0.3px;
+}
+
+.visual-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(201, 169, 97, 0.1);
+  font-size: 14px;
+}
+
+.visual-row:last-child { border-bottom: none; }
+
+.visual-row-label {
+  color: rgba(244, 241, 234, 0.6);
+  font-weight: 400;
+}
+
+.visual-row-value {
+  color: var(--cream);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.visual-row-value.highlight {
+  color: var(--gold);
+}
+
+.visual-row-value.gap {
+  color: #E8926A;
+}
+
+/* ========== SECTIONS ========== */
+section {
+  padding: 120px 40px;
+  position: relative;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-muted);
+  margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.section-eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--gold-muted);
+}
+
+h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  font-variation-settings: 'opsz' 144;
+  margin-bottom: 24px;
+  max-width: 720px;
+}
+
+h2 em {
+  font-style: italic;
+  color: var(--gold-muted);
+}
+
+.section-sub {
+  font-size: 1.05rem;
+  color: var(--muted);
+  max-width: 620px;
+  margin-bottom: 72px;
+  line-height: 1.7;
+}
+
+/* ========== PAIN SECTION ========== */
+.pain {
+  background: var(--cream);
+  position: relative;
+}
+
+.pain::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 1px;
+  background: var(--gold-muted);
+}
+
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 40px;
+}
+
+.pain-card {
+  background: var(--cream);
+  padding: 48px 40px;
+  transition: background 0.4s;
+}
+
+.pain-card:hover {
+  background: var(--cream-warm);
+}
+
+.pain-num {
+  font-family: 'Fraunces', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--gold);
+  margin-bottom: 20px;
+  font-variation-settings: 'opsz' 144;
+}
+
+.pain-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--ink);
+  margin-bottom: 16px;
+  font-variation-settings: 'opsz' 144;
+}
+
+.pain-text {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ========== FORM SECTION ========== */
+.form-section {
+  background: var(--navy);
+  color: var(--cream);
+  padding: 140px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse at top left, rgba(201, 169, 97, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.form-section .section-eyebrow {
+  color: var(--gold);
+}
+
+.form-section .section-eyebrow::before {
+  background: var(--gold);
+}
+
+.form-section h2 {
+  color: var(--cream);
+}
+
+.form-section h2 em {
+  color: var(--gold);
+}
+
+.form-section .section-sub {
+  color: rgba(244, 241, 234, 0.7);
+}
+
+.form-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 80px;
+  align-items: start;
+  position: relative;
+  z-index: 2;
+}
+
+.form-intro ul {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.form-intro li {
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(201, 169, 97, 0.15);
+  color: rgba(244, 241, 234, 0.85);
+  font-size: 0.98rem;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.form-intro li::before {
+  content: "—";
+  color: var(--gold);
+  font-weight: 400;
+  flex-shrink: 0;
+}
+
+.form-intro li:last-child { border-bottom: none; }
+
+.form-card {
+  background: var(--cream);
+  color: var(--ink);
+  padding: 48px 44px;
+  position: relative;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+}
+
+.form-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-soft) 100%);
+}
+
+.form-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 6px;
+  font-variation-settings: 'opsz' 144;
+}
+
+.form-desc {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+
+.form-row {
+  margin-bottom: 20px;
+}
+
+.form-row-double {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+input, select {
+  width: 100%;
+  padding: 14px 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(10, 22, 40, 0.15);
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  color: var(--ink);
+  transition: border-color 0.3s;
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-bottom-color: var(--gold);
+}
+
+input::placeholder {
+  color: rgba(92, 107, 130, 0.5);
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235C6B82' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 32px;
+}
+
+.submit-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 18px 24px;
+  background: var(--navy);
+  color: var(--cream);
+  border: 1px solid var(--navy);
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-radius: 0;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-privacy {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.form-privacy svg {
+  display: inline-block;
+  vertical-align: -3px;
+  margin-right: 6px;
+}
+
+/* Success state */
+.success-state {
+  display: none;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.success-state.active {
+  display: block;
+  animation: fadeUp 0.6s ease;
+}
+
+.success-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 12px;
+  font-variation-settings: 'opsz' 144;
+}
+
+.success-text {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+.open-sheet-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  background: var(--navy);
+  color: var(--cream);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+.open-sheet-btn:hover {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+/* ========== ABOUT ========== */
+.about {
+  background: var(--cream-warm);
+  padding: 140px 40px;
+  position: relative;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.about-photo {
+  position: relative;
+}
+
+/* Monogram block (replaces photo) */
+.about-monogram {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.mono-frame {
+  position: relative;
+  padding: 72px 48px;
+  text-align: center;
+  background:
+    linear-gradient(135deg, rgba(201, 169, 97, 0.05) 0%, transparent 40%, rgba(201, 169, 97, 0.03) 100%);
+  border-left: 1px solid var(--line-dark);
+  border-right: 1px solid var(--line-dark);
+  width: 100%;
+  max-width: 380px;
+}
+
+.mono-top-line,
+.mono-bottom-line {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.mono-top-line { top: 0; }
+.mono-bottom-line { bottom: 0; }
+
+.mono-letters {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 7rem;
+  line-height: 1;
+  color: var(--ink);
+  font-variation-settings: 'opsz' 144;
+  letter-spacing: -0.02em;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.mono-letters span:first-child,
+.mono-letters span:last-child {
+  color: var(--ink);
+}
+
+.mono-dot {
+  color: var(--gold) !important;
+  font-style: normal;
+  font-size: 0.45em;
+  transform: translateY(-1.4em);
+  margin: 0 8px;
+}
+
+.mono-divider {
+  width: 48px;
+  height: 1px;
+  background: var(--gold);
+  margin: 28px auto 24px;
+}
+
+.mono-name {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.35rem;
+  color: var(--ink);
+  margin-bottom: 10px;
+  font-variation-settings: 'opsz' 144;
+}
+
+.mono-sublabel {
+  font-family: 'Manrope', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-muted);
+}
+
+.about-photo::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: -16px;
+  right: 16px;
+  bottom: 16px;
+  border: 1px solid var(--gold);
+  z-index: 0;
+}
+
+.about-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  position: relative;
+  z-index: 1;
+  filter: grayscale(15%) contrast(1.05);
+}
+
+.about-name {
+  font-family: 'Fraunces', serif;
+  font-size: 2.4rem;
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 8px;
+  font-variation-settings: 'opsz' 144;
+}
+
+.about-role {
+  font-size: 14px;
+  color: var(--gold-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 32px;
+}
+
+.about-text {
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: var(--muted);
+  margin-bottom: 36px;
+}
+
+.credentials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.credential {
+  padding: 8px 18px;
+  border: 1px solid var(--line-dark);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 600;
+  background: var(--cream);
+}
+
+.locations {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+.locations svg { flex-shrink: 0; }
+
+/* ========== INTERVIEW CTA ========== */
+.interview {
+  background: var(--navy-deep);
+  color: var(--cream);
+  padding: 120px 40px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.interview::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center, rgba(201, 169, 97, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.interview-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.interview .section-eyebrow {
+  color: var(--gold);
+  justify-content: center;
+  display: flex;
+}
+
+.interview .section-eyebrow::before {
+  background: var(--gold);
+}
+
+.interview h2 {
+  color: var(--cream);
+  margin: 0 auto 24px;
+}
+
+.interview h2 em {
+  color: var(--gold);
+}
+
+.interview-text {
+  font-size: 1.05rem;
+  color: rgba(244, 241, 234, 0.75);
+  line-height: 1.75;
+  margin-bottom: 48px;
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 40px;
+  background: var(--gold);
+  color: var(--navy-deep);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--gold);
+}
+
+.whatsapp-btn:hover {
+  background: transparent;
+  color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(201, 169, 97, 0.2);
+}
+
+/* ========== FOOTER ========== */
+footer {
+  background: var(--navy-deep);
+  color: rgba(244, 241, 234, 0.5);
+  padding: 60px 40px 40px;
+  border-top: 1px solid rgba(201, 169, 97, 0.1);
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.footer-brand {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 20px;
+  color: var(--cream);
+  margin-bottom: 12px;
+  font-variation-settings: 'opsz' 144;
+}
+
+.footer-brand span { color: var(--gold); }
+
+.footer-handle {
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.footer-compliance {
+  font-size: 11px;
+  line-height: 1.7;
+  color: rgba(244, 241, 234, 0.45);
+}
+
+.footer-bottom {
+  max-width: 1100px;
+  margin: 40px auto 0;
+  padding-top: 28px;
+  border-top: 1px solid rgba(201, 169, 97, 0.1);
+  font-size: 11px;
+  color: rgba(244, 241, 234, 0.35);
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  nav { padding: 18px 24px; }
+  .monogram { font-size: 19px; }
+  .nav-handle { font-size: 11px; }
+
+  .hero { padding: 120px 24px 60px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+
+  section { padding: 80px 24px; }
+  .form-section { padding: 90px 24px; }
+  .about { padding: 90px 24px; }
+  .interview { padding: 90px 24px; }
+
+  .pain-grid { grid-template-columns: 1fr; }
+  .form-wrap { grid-template-columns: 1fr; gap: 48px; }
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .about-photo { max-width: 360px; margin: 0 auto; }
+  .about-monogram { padding: 0; }
+  .mono-frame { padding: 56px 32px; max-width: 320px; margin: 0 auto; }
+  .mono-letters { font-size: 5.5rem; }
+
+  .form-card { padding: 36px 28px; }
+  .form-row-double { grid-template-columns: 1fr; gap: 0; }
+  .form-row-double > * { margin-bottom: 20px; }
+
+  .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+
+  .visual-card { padding: 28px 24px; }
+  .visual-big { font-size: 2.4rem; }
+}
+
+@media (max-width: 480px) {
+  .hero-cta, .whatsapp-btn { padding: 16px 28px; font-size: 12px; }
+  .credentials { gap: 8px; }
+  .credential { padding: 6px 12px; font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav>
+  <div class="monogram">Leonardo <span>Augusto</span></div>
+  <a href="https://instagram.com/leonardo.wealth" target="_blank" class="nav-handle">@leonardo.wealth</a>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Planejamento Patrimonial</div>
+      <h1>Quando você<br>poderá <em>parar<br>de trabalhar?</em></h1>
+      <p class="hero-sub">
+        A maioria dos médicos, advogados e profissionais liberais de alta renda no Brasil não sabe a resposta. Preencha 4 campos e receba seu diagnóstico personalizado direto no WhatsApp.
+      </p>
+      <a href="#formulario" class="hero-cta">
+        Simular minha liberdade
+        <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
+          <path d="M1 7h16M11 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="hero-visual">
+      <div class="visual-card">
+        <div class="visual-label">Simulação · Exemplo</div>
+        <div class="visual-big">R$ 5.000.000</div>
+        <div class="visual-small">Patrimônio-alvo para renda de R$ 25.000/mês</div>
+
+        <div class="visual-row">
+          <span class="visual-row-label">Sua idade</span>
+          <span class="visual-row-value">35 anos</span>
+        </div>
+        <div class="visual-row">
+          <span class="visual-row-label">Meta</span>
+          <span class="visual-row-value">Parar aos 60</span>
+        </div>
+        <div class="visual-row">
+          <span class="visual-row-label">Projeção ritmo atual</span>
+          <span class="visual-row-value highlight">R$ 5.193.829</span>
+        </div>
+        <div class="visual-row">
+          <span class="visual-row-label">Idade real em que para</span>
+          <span class="visual-row-value gap">59 anos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PAIN SECTION ========== -->
+<section class="pain">
+  <div class="container">
+    <div class="section-eyebrow reveal">O diagnóstico honesto</div>
+    <h2 class="reveal">Você fatura bem.<br>Mas o <em>futuro não está resolvido.</em></h2>
+    <p class="section-sub reveal">
+      Três sintomas que aparecem com frequência nas conversas com profissionais liberais de alta renda. Se pelo menos um deles bate, a simulação vai te mostrar o tamanho real do problema.
+    </p>
+
+    <div class="pain-grid reveal">
+      <div class="pain-card">
+        <div class="pain-num">01</div>
+        <div class="pain-title">Dinheiro parado sem render</div>
+        <p class="pain-text">Reserva em poupança ou CDB do banco "só por enquanto", há anos. Perdendo para a inflação silenciosamente, mês após mês.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-num">02</div>
+        <div class="pain-title">Previdência sem estratégia</div>
+        <p class="pain-text">PGBL ou VGBL indicado pelo gerente, que você nunca mais olhou. Sem saber se é o produto certo, nem quanto vai entregar.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-num">03</div>
+        <div class="pain-title">Zero clareza sobre a aposentadoria</div>
+        <p class="pain-text">A sensação de "ainda dá tempo" sem nenhuma conta que mostre quanto falta, quando dá pra parar, e quanto precisa guardar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FORM SECTION ========== -->
+<section class="form-section" id="formulario">
+  <div class="container">
+    <div class="form-wrap">
+      <div class="form-intro">
+        <div class="section-eyebrow reveal">Simulação gratuita</div>
+        <h2 class="reveal">O que você recebe ao<br><em>preencher o formulário</em></h2>
+        <ul class="reveal">
+          <li>Patrimônio-alvo exato para a renda desejada que você selecionou</li>
+          <li>Diagnóstico do seu patrimônio atual frente ao objetivo</li>
+          <li>O gap entre onde você está e onde precisa chegar</li>
+          <li>Aporte mensal necessário para fechar esse gap</li>
+          <li>Estratégia inicial de alocação alinhada ao seu perfil</li>
+        </ul>
+      </div>
+
+      <div class="form-card">
+        <!-- FORM STATE -->
+        <div id="formContainer">
+          <div class="form-title">Simule sua liberdade</div>
+          <div class="form-desc">4 campos. Em breve entro em contato no seu WhatsApp com o diagnóstico personalizado.</div>
+
+          <form id="simForm" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="e40ee3d5-7854-4a96-a46c-4df7aa27accf">
+            <input type="hidden" name="subject" value="Novo lead — Simulador Liberdade Financeira">
+            <input type="hidden" name="from_name" value="Simulador Leonardo Augusto">
+            <input type="checkbox" name="botcheck" style="display:none;">
+
+            <div class="form-row">
+              <label for="nome">Nome completo</label>
+              <input type="text" id="nome" name="Nome" required placeholder="Como você prefere ser chamado">
+            </div>
+
+            <div class="form-row">
+              <label for="whatsapp">WhatsApp</label>
+              <input type="tel" id="whatsapp" name="WhatsApp" required placeholder="(00) 00000-0000">
+            </div>
+
+            <div class="form-row">
+              <label for="patrimonio">Patrimônio investido hoje</label>
+              <select id="patrimonio" name="Patrimônio Atual" required>
+                <option value="">Selecionar faixa</option>
+                <option>Até R$ 100 mil</option>
+                <option>R$ 100 a R$ 300 mil</option>
+                <option>R$ 300 a R$ 500 mil</option>
+                <option>R$ 500 mil a R$ 1 milhão</option>
+                <option>R$ 1 a R$ 3 milhões</option>
+                <option>Acima de R$ 3 milhões</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="renda">Renda mensal desejada na aposentadoria</label>
+              <select id="renda" name="Renda Desejada" required>
+                <option value="">Selecionar faixa</option>
+                <option>Até R$ 15 mil/mês</option>
+                <option>R$ 15 a R$ 25 mil/mês</option>
+                <option>R$ 25 a R$ 40 mil/mês</option>
+                <option>R$ 40 a R$ 60 mil/mês</option>
+                <option>Acima de R$ 60 mil/mês</option>
+              </select>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+              <span id="btnText">Receber minha simulação</span>
+              <svg width="16" height="12" viewBox="0 0 18 14" fill="none">
+                <path d="M1 7h16M11 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <div class="form-privacy">
+              <svg width="12" height="14" viewBox="0 0 12 14" fill="none">
+                <path d="M2 6V4a4 4 0 018 0v2M1 6h10v7H1V6z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+              </svg>
+              Seus dados são confidenciais e usados apenas por mim para entrar em contato.
+            </div>
+          </form>
+        </div>
+
+        <!-- SUCCESS STATE -->
+        <div id="successContainer" class="success-state">
+          <div class="success-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <path d="M5 13l4 4L19 7" stroke="#0A1628" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="success-title">Solicitação recebida</div>
+          <div class="success-text">
+            Obrigado. Em breve entro em contato no seu WhatsApp com o diagnóstico personalizado. Preparo cada análise individualmente, por isso o cuidado. O que você recebe é feito sob medida pro seu caso, não um PDF genérico.
+          </div>
+          <a href="https://instagram.com/leonardo.wealth" target="_blank" class="open-sheet-btn">
+            Seguir no Instagram
+            <svg width="16" height="12" viewBox="0 0 18 14" fill="none">
+              <path d="M1 7h16M11 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ABOUT ========== -->
+<section class="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-monogram reveal">
+        <div class="mono-frame">
+          <div class="mono-top-line"></div>
+          <div class="mono-letters"><span>L</span><span class="mono-dot">·</span><span>A</span></div>
+          <div class="mono-divider"></div>
+          <div class="mono-name">Leonardo Augusto</div>
+          <div class="mono-sublabel">Planejamento Patrimonial</div>
+          <div class="mono-bottom-line"></div>
+        </div>
+      </div>
+      <div>
+        <div class="section-eyebrow reveal">Quem assina</div>
+        <h1 class="about-name reveal">Leonardo Augusto<br>Silva de Oliveira</h1>
+        <div class="about-role reveal">Assessor de Investimentos</div>
+        <p class="about-text reveal">
+          Credenciado à XP via escritório Monteverde. Cerca de 5 anos ajudando clientes a investir melhor o patrimônio e, principalmente, a alinhar as aplicações com os objetivos de vida — que é o ponto central de qualquer estratégia patrimonial séria.
+        </p>
+        <div class="credentials reveal">
+          <div class="credential">AAI Sênior</div>
+          <div class="credential">Monteverde</div>
+          <div class="credential">XP</div>
+          <div class="credential">ANBIMA</div>
+          <div class="credential">ANCORD</div>
+        </div>
+        <div class="locations reveal">
+          <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
+            <path d="M7 15s5-5.5 5-9A5 5 0 002 6c0 3.5 5 9 5 9z" stroke="currentColor" stroke-width="1.2"/>
+            <circle cx="7" cy="6" r="1.8" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+          BH · SP · Fortaleza &nbsp;|&nbsp; Atendimento em todo o Brasil
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== INTERVIEW CTA ========== -->
+<section class="interview">
+  <div class="interview-inner">
+    <div class="section-eyebrow reveal">Próximo passo</div>
+    <h2 class="reveal">Ficou surpreso<br>com o <em>resultado?</em></h2>
+    <p class="interview-text reveal">
+      Uma simulação mostra a direção. Ela não resolve o problema. Se os números te incomodaram e você quer entender como contornar — estrutura PF/PJ, previdência, alocação, proteção e sucessão — aplique para uma entrevista de 30 minutos comigo. Sem custo, sem compromisso.
+    </p>
+    <a href="https://wa.me/5585996503393?text=Oi%20Leonardo%2C%20fiz%20a%20simula%C3%A7%C3%A3o%20e%20gostaria%20de%20agendar%20nossa%20conversa%20de%2030%20min%20para%20planejar%20de%20maneira%20correta%20minha%20aposentadoria" target="_blank" class="whatsapp-btn reveal">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.52 3.48A12 12 0 003.5 20.4l-1.5 5.6 5.75-1.5a12 12 0 0017.28-10.35 12 12 0 00-4.52-10.67zM12.05 22a10 10 0 01-5.1-1.4l-.37-.22-3.78 1 1-3.68-.24-.38a10 10 0 1118.5-5.23A10 10 0 0112.05 22zm5.5-7.45c-.3-.15-1.78-.88-2.06-.98-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.77-1.67-2.07-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.52-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.8.37-.27.3-1.05 1.02-1.05 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.1 3.2 5.1 4.5.71.3 1.27.48 1.7.62.72.23 1.37.2 1.89.12.58-.08 1.78-.72 2.03-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/>
+      </svg>
+      Falar no WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Leonardo <span>Augusto</span></div>
+      <a href="https://instagram.com/leonardo.wealth" class="footer-handle">@leonardo.wealth</a>
+    </div>
+    <div class="footer-compliance">
+      Material educacional. Não constitui recomendação de investimento nem promessa de rentabilidade. A decisão de investir é do investidor e deve considerar seu perfil de risco.
+      <br><br>
+      Leonardo Augusto Silva de Oliveira · AAI sênior credenciado à XP Investimentos via Monteverde · Registro ANCORD · Certificação ANBIMA.
+      <br>
+      Ouvidoria XP: 0800 722 3730
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 Leonardo Augusto · Todos os direitos reservados
+  </div>
+</footer>
+
+<script>
+// Form submission
+const form = document.getElementById('simForm');
+const formContainer = document.getElementById('formContainer');
+const successContainer = document.getElementById('successContainer');
+const submitBtn = document.getElementById('submitBtn');
+const btnText = document.getElementById('btnText');
+
+// WhatsApp mask
+document.getElementById('whatsapp').addEventListener('input', function(e) {
+  let v = e.target.value.replace(/\D/g, '');
+  if (v.length > 11) v = v.slice(0, 11);
+  if (v.length > 7) v = v.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+  else if (v.length > 2) v = v.replace(/(\d{2})(\d{0,5})/, '($1) $2');
+  e.target.value = v;
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  submitBtn.disabled = true;
+  btnText.textContent = 'Enviando...';
+
+  const formData = new FormData(form);
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      formContainer.style.display = 'none';
+      successContainer.classList.add('active');
+
+      // Scroll into view on mobile
+      successContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      throw new Error(data.message || 'Erro ao enviar');
+    }
+  } catch (err) {
+    btnText.textContent = 'Tentar novamente';
+    submitBtn.disabled = false;
+    alert('Houve um erro ao enviar. Por favor, tente novamente ou fale direto pelo WhatsApp.');
+  }
+});
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+reveals.forEach((el) => io.observe(el));
+</script>
+
+</body>
+</html>
